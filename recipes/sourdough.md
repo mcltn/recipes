@@ -11,7 +11,7 @@ ingredients:
   - 615 grams water
 ---
 
-## 1. Initial starter feed setup
+1. Initial starter feed setup
 
 Measure out equal parts starter, flour and water and mix together. Let sit and rise for 4 hours.
 
@@ -19,7 +19,7 @@ Measure out equal parts starter, flour and water and mix together. Let sit and r
 - 15 grams flour
 - 15 grams water
 
-## 2. Feed the starter more to develop a leaven
+2. Feed the starter more to develop a leaven
 
 Measure out ingredients to further feed the starter mix, use a 1:4:4 ratio.
 
@@ -29,7 +29,7 @@ Measure out ingredients to further feed the starter mix, use a 1:4:4 ratio.
 
 This will rise for 12 hours or overnight.
 
-## 3. Combine further ingredients to make the desired sourdough loaf with a 1:2:3 ratio.
+3. Combine further ingredients to make the desired sourdough loaf with a 1:2:3 ratio.
 
 - 200 grams leaven
 - 400 grams water
@@ -37,15 +37,15 @@ This will rise for 12 hours or overnight.
 
 This will make a decent size loaf and maybe a smaller loaf. Mix ingredients together and add 20 grams salt across the top. Cover and let rest for 1-2 hours. You can store and excess leaven back to your starter.
 
-## 4. Stretch and Fold (perform this step twice)
+4. Stretch and Fold (perform this step twice)
 
 Stretch out the dough and fold over multiple times. Let rise for 1 hour. Shape into a basket or ball.
 
-## 5. Cooking time
+5. Cooking time
 Preheat the oven to 450 with the dutch oven and lid to heat up. Once pre-heated, place the dough into the dutch oven, score the top, and bake covered for 20 minutes. Uncover, and bake for an additional 10-20 minutes or till golden brown. Can optionally score the dough after the initial 10 minutes of baking to ease the cut if the dough is sticky.
 
-## 6. Cooling
+6. Cooling
 When taken out of the oven, let the bread cool for a good amount of time before slicing, possibly a couple hours.
 
-## 7. Freeze
+7. Freeze
 After slicing, choose to place into a zip lock bag and freeze. Defrost and toast as preferred.
