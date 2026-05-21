@@ -7,25 +7,125 @@
     <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍳 <a href="{{ '/' | relative_url }}" class="home-link">My Recipes</a></h1>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>🍳 My Recipes</h1>
             <p class="subtitle">A collection of recipes I love</p>
         </header>
 
-        <nav class="breadcrumb">
-            {% if page.url != '/' %}
-                <a href="{{ '/' | relative_url }}">← Back to Recipes</a>
-            {% endif %}
-        </nav>
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <nav class="recipe-nav">
+                    {% assign recipes = site.pages | where_exp: "page", "page.path contains 'recipes'" | sort: "title" %}
+                    {% assign categories = "" | split: "" %}
+                    {% for recipe in recipes %}
+                        {% if recipe.category %}
+                            {% assign categories = categories | push: recipe.category | uniq %}
+                        {% endif %}
+                    {% endfor %}
+                    {% assign sorted_categories = categories | sort %}
 
-        <main>
-            {{ content }}
-        </main>
+                    {% for category in sorted_categories %}
+                        <div class="nav-category">
+                            <h3 class="nav-category-title">{{ category }}</h3>
+                            {% for recipe in recipes %}
+                                {% if recipe.category == category %}
+                                    <button class="recipe-nav-item" data-recipe-id="{{ recipe.url | relative_url }}">
+                                        {{ recipe.title }}
+                                    </button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div id="recipe-display">
+                    <div class="placeholder-content">
+                        <h2>Welcome to My Recipes</h2>
+                        <p>Select a recipe from the list on the left to get started.</p>
+                        <p>Discover delicious dishes and cooking inspiration!</p>
+                    </div>
+                </div>
+            </main>
+        </div>
 
         <footer>
             <p>Made with ❤️ | <a href="https://github.com" target="_blank">GitHub</a></p>
         </footer>
     </div>
+
+    <script>
+        const recipes = {
+            {% assign recipes = site.pages | where_exp: "page", "page.path contains 'recipes'" | sort: "title" %}
+            {% for recipe in recipes %}
+                "{{ recipe.url | relative_url }}": {
+                    "title": "{{ recipe.title }}",
+                    "category": "{{ recipe.category }}",
+                    "prep_time": "{{ recipe.prep_time }}",
+                    "cook_time": "{{ recipe.cook_time }}",
+                    "servings": "{{ recipe.servings }}",
+                    "ingredients": [
+                        {% for ingredient in recipe.ingredients %}"{{ ingredient }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+                    ],
+                    "instructions": `{{ recipe.content | strip_html | escape }}`
+                }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        };
+
+        const recipeDisplay = document.getElementById('recipe-display');
+        const navItems = document.querySelectorAll('.recipe-nav-item');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const recipeId = item.dataset.recipeId;
+                const recipe = recipes[recipeId];
+
+                if (!recipe) {
+                    console.error('Recipe not found:', recipeId);
+                    return;
+                }
+
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                let html = `
+                    <div class="recipe-page">
+                        <div class="recipe-header-page">
+                            <div>
+                                <h1>${recipe.title}</h1>
+                                ${recipe.category ? `<span class="recipe-category-page">${recipe.category}</span>` : ''}
+                            </div>
+                        </div>
+
+                        <div class="recipe-content">
+                            <div class="recipe-ingredients-page">
+                                <h2>Ingredients</h2>
+                                <ul>
+                                    ${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                                </ul>
+                            </div>
+
+                            <div class="recipe-instructions-page">
+                                <h2>Instructions</h2>
+                                <div>${recipe.instructions.split('\n').filter(line => line.trim()).map(line => `<p>${line.trim()}</p>`).join('')}</div>
+                            </div>
+                        </div>
+
+                        ${recipe.prep_time || recipe.cook_time || recipe.servings ? `
+                            <div class="recipe-meta">
+                                ${recipe.prep_time ? `<p><strong>Prep time:</strong> ${recipe.prep_time}</p>` : ''}
+                                ${recipe.cook_time ? `<p><strong>Cook time:</strong> ${recipe.cook_time}</p>` : ''}
+                                ${recipe.servings ? `<p><strong>Servings:</strong> ${recipe.servings}</p>` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+
+                recipeDisplay.innerHTML = html;
+            });
+        });
+    </script>
 </body>
 </html>
